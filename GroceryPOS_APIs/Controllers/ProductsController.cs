@@ -1,9 +1,6 @@
 ﻿using GS_Business;
 using GS_DTOs;
-using GS_DTOs.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Loging_Service;
 
 namespace GS_APIs.Controllers
 {
