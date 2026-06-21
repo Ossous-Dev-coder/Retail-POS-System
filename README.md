@@ -56,5 +56,3 @@ The project follows a layered structure:
 - SQL Server
 - ADO.NET
 - RESTfull APIs
-
--
