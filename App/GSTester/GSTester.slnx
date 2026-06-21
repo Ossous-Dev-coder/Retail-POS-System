@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../GSData/GSData.csproj" />
+  <Project Path="GSTester.csproj" />
+</Solution>
