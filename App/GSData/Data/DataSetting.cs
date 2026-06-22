@@ -6,6 +6,8 @@ namespace GS_DTOs.Data
 {
 	internal class DataSetting
 	{
-		static public string ConnectionString = PrivateSetting.;
+		// Please set your connection string.
+
+		static public string ConnectionString = PrivateSetting.connectionString; 
 	}
 }
