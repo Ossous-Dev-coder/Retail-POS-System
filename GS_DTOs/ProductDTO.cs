@@ -1,10 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-
-namespace GS_DTOs
+﻿namespace GS_DTOs
 {
 	public class ProductDTO
 	{

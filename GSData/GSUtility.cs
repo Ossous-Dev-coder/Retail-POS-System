@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace GS_DTOs
+namespace GS_Data
 {
 	public class GSUtility
 	{

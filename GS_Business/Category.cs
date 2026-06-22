@@ -1,5 +1,5 @@
-﻿using GS_DTOs;
-using GS_DTOs.Data;
+﻿using GS_Data;
+using GS_Data.Data;
 
 namespace GS_Business
 {

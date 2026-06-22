@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GS_DTOs;
-
-namespace GS_DTOs
+﻿namespace GS_DTOs
 {
 	public class NewProductDTO
 	{

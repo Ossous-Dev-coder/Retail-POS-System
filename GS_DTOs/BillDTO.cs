@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GS_DTOs
+﻿namespace GS_DTOs
 {
 	public class BillDTO
 	{

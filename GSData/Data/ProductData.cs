@@ -1,7 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using GS_DTOs;
 
-namespace GS_DTOs.Data
+namespace GS_Data.Data
 {
 	public class ProductData
 	{

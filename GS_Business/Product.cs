@@ -1,4 +1,5 @@
-﻿using GS_DTOs.Data;
+﻿using GS_Data;
+using GS_Data.Data;
 using GS_DTOs;
 
 namespace GS_Business
@@ -33,7 +34,7 @@ namespace GS_Business
 		{
 			GSUtility.ValidateNumber(categoryId, "Invalid Category id");
 
-			return ProductData.GetAllProducts(categoryId);
+			return ProductData.GetAllProducts(categoryId); 
 		}
 
 		public static ProductDTO? GetProductById(int productId)

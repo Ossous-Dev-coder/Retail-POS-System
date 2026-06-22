@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App\GSData\GS_Data.csproj" />
+    <ProjectReference Include="..\GSData\GS_Data.csproj" />
     <ProjectReference Include="..\GS_DTOs\GS_DTOs.csproj" />
     <ProjectReference Include="..\Loging Service\Logging Service.csproj" />
   </ItemGroup>

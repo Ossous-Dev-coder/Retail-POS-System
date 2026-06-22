@@ -1,8 +1,4 @@
-﻿
-
-using GS_Data;
-
-namespace GS_DTOs.Data
+﻿namespace GS_Data.Data
 {
 	internal class DataSetting
 	{

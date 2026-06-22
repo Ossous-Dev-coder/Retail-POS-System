@@ -2,7 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path="../../Courses/RESTful APIs/Projects/HRBackendAPIs/Controllers/HRController.cs" />
   </Folder>
-  <Project Path="../App/GSData/GS_Data.csproj" />
+  <Project Path="../GSData/GS_Data.csproj" />
   <Project Path="../GS_Business/GS_Business.csproj" Id="b20d253a-e49c-4681-b054-a6f86029804e" />
   <Project Path="../GS_DTOs/GS_DTOs.csproj" Id="7c40b1df-2198-4eb7-9d11-47003e8dffe9" />
   <Project Path="../Loging Service/Logging Service.csproj" Id="c108c4f1-5dae-4228-a649-45f49c1a6a79" />
