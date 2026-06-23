@@ -8,18 +8,48 @@ USE GroceryPosDb;
 
 GO
 
+CREATE TABLE Users (
+
+	id INT IDENTITY(1,1) PRIMARY KEY,
+
+	firstName VARCHAR(50) NOT NULL CHECK (firstName <> ''),
+	lastName VARCHAR(50) NOT NULL CHECK (lastName <> ''),
+
+	phone VARCHAR(20) NULL,
+	email VARCHAR(100) UNIQUE NOT NULL CHECK (email <> ''),
+
+	passwordHash VARCHAR(255) NOT NULL CHECK (passwordHash <> ''),
+	hashSalt VARCHAR(255) UNIQUE NOT NULL CHECK (hashSalt <> ''),
+
+	permissions INT NOT NULL,
+
+	createdAt DATETIME2 DEFAULT GETDATE(),
+	updatedAt DATETIME2 NULL,
+
+	isActive BIT NOT NULL DEFAULT 1,
+
+	imagePath VARCHAR(300) NULL) 
+
+
+
+
+
+
 CREATE TABLE Categories (
 	id INT IDENTITY(1,1) PRIMARY KEY,
 	name VARCHAR(50) UNIQUE NOT NULL CHECK (name <> ''),
 	description VARCHAR(200) NULL,
 	createdAt DATETIME2 DEFAULT GETDATE(),
 	updatedAt DATETIME2 NULL,
-	imagePath VARCHAR(300) NULL) -- Done
+	imagePath VARCHAR(300) NULL) 
+
 
 
 CREATE TABLE PricingTypes (
 	id INT IDENTITY(1,1) PRIMARY KEY,
-	name VARCHAR(50) UNIQUE NOT NULL CHECK (name <> '')) -- Done
+	name VARCHAR(50) UNIQUE NOT NULL CHECK (name <> '')) 
+
+
 
 CREATE TABLE Products(
 	id INT IDENTITY(1,1) PRIMARY KEY,
@@ -41,11 +71,14 @@ CREATE TABLE Products(
 	CONSTRAINT FK_PricingType
 	FOREIGN KEY (pricingType_id)
 	REFERENCES PricingTypes(id)
-	) -- Done
+	)
+
+
 
 CREATE TABLE MovementTypes (
 	id INT IDENTITY(1,1) PRIMARY KEY,
-	name VARCHAR(50) UNIQUE NOT NULL) -- Done
+	name VARCHAR(50) UNIQUE NOT NULL)
+
 
 CREATE TABLE StockMovements (
 	id INT IDENTITY(1,1) PRIMARY KEY,
@@ -107,22 +140,18 @@ CREATE TABLE BillItems(
 	REFERENCES Products(id))
 
 
-
-
+--=========================== indexes ==========================/
 
 CREATE INDEX IX_Products_BarCode
 ON Products(barCode)
 
-GO 
 
 CREATE INDEX IX_Products_Name ON Products(name)
 
-GO
 
 CREATE INDEX IX_BillItems_BillId
 ON BillItems(bill_id);
 
-GO
 
 CREATE INDEX IX_StockMovements_ProductId
 ON StockMovements(product_id);
