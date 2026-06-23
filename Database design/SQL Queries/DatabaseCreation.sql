@@ -1,6 +1,12 @@
 --CREATE DATABASE GroceryPosDb
 
+CREATE Database GroceryPosDb
 
+GO 
+
+USE GroceryPosDb;
+
+GO
 
 CREATE TABLE Categories (
 	id INT IDENTITY(1,1) PRIMARY KEY,
