@@ -105,7 +105,7 @@ namespace GS_Data.Data
 			return cmd.ExecuteNonQuery();
 		}
 
-		public List<UserDTO> GetAllUsers()
+		public static List<UserDTO> GetAllUsers()
 		{
 			List<UserDTO> users = new();
 
