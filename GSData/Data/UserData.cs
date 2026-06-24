@@ -1,15 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using static GS_DTOs.UserDTOs;
 
 namespace GS_Data.Data
 {
 	public class UserData
 	{
-		public int AddUser(CreateUserDTO user)
+		public static int AddUser(CreateUserDTO user)
 		{
 			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
 			using SqlCommand cmd = new SqlCommand("SP_AddNewUser", conn);
@@ -36,7 +33,7 @@ namespace GS_Data.Data
 			return Convert.ToInt32(result);
 		}
 
-		public int UpdateUser(UpdateUserDTO user)
+		public static int UpdateUser(UpdateUserDTO user)
 		{
 			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
 			using SqlCommand cmd = new SqlCommand("SP_UpdateUser", conn);
@@ -61,7 +58,7 @@ namespace GS_Data.Data
 			return cmd.ExecuteNonQuery();
 		}
 
-		public UserDTO? GetUserById(int id)
+		public static UserDTO? GetUserById(int id)
 		{
 			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
 			using SqlCommand cmd = new SqlCommand("SP_GetUserById", conn);
@@ -93,7 +90,7 @@ namespace GS_Data.Data
 			};
 		}
 
-		public int UserActivation(int id, bool status)
+		public static int UserActivation(int id, bool status)
 		{
 			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
 			using SqlCommand cmd = new SqlCommand("SP_ChangeActivationStatus", conn);
@@ -106,6 +103,57 @@ namespace GS_Data.Data
 			conn.Open();
 
 			return cmd.ExecuteNonQuery();
+		}
+
+		public List<UserDTO> GetAllUsers()
+		{
+			List<UserDTO> users = new();
+
+			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
+			using SqlCommand cmd = new SqlCommand("SP_GetAllUsers", conn);
+
+			cmd.CommandType = CommandType.StoredProcedure;
+
+			conn.Open();
+
+			using SqlDataReader reader = cmd.ExecuteReader();
+
+			int idOrdinal = reader.GetOrdinal("id");
+			int firstNameOrdinal = reader.GetOrdinal("firstName");
+			int lastNameOrdinal = reader.GetOrdinal("lastName");
+			int emailOrdinal = reader.GetOrdinal("email");
+			int permissionsOrdinal = reader.GetOrdinal("permissions");
+			int createdAtOrdinal = reader.GetOrdinal("createdAt");
+			int updatedAtOrdinal = reader.GetOrdinal("updatedAt");
+			int phoneOrdinal = reader.GetOrdinal("phone");
+			int imagePathOrdinal = reader.GetOrdinal("imagePath");
+
+			while (reader.Read())
+			{
+				users.Add(new UserDTO
+				{
+					Id = reader.GetInt32(idOrdinal),
+					FirstName = reader.GetString(firstNameOrdinal),
+					LastName = reader.GetString(lastNameOrdinal),
+					Email = reader.GetString(emailOrdinal),
+					Permissions = reader.GetInt32(permissionsOrdinal),
+					CreatedAt = reader.GetDateTime(createdAtOrdinal),
+
+					UpdatedAt = reader.IsDBNull(updatedAtOrdinal)
+						? null
+						: reader.GetDateTime(updatedAtOrdinal),
+
+					Phone = reader.IsDBNull(phoneOrdinal)
+						? null
+						: reader.GetString(phoneOrdinal),
+
+					ImagePath = reader.IsDBNull(imagePathOrdinal)
+						? null
+						: reader.GetString(imagePathOrdinal)
+				});
+			}
+
+			return users;
 		}
 	}
 }
