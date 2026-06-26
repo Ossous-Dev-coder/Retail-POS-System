@@ -65,9 +65,6 @@ VALUES
 ('611000777003', 'Chips Hawaii', 'Potato chips', 3.00, 1, NULL, 7, 1);
 
 
-SELECT p.name, p.description, p.unitPrice, p.quantity, c.name AS Category, pt.name AS PricingType  FROM 
-Products p JOIN Categories c ON p.category_id = c.id JOIN PricingTypes pt ON p.pricingType_id = pt.id
-
 GO
 
 INSERT INTO MovementTypes (Name, StockEffect)
@@ -85,6 +82,7 @@ VALUES
 ('Expired Goods', -1),
 ('Inventory Count Correction', 0);
 
+GO
 
 INSERT INTO StockMovements (product_id, movementType_id, quantity)
 VALUES
@@ -144,3 +142,18 @@ VALUES
 
 -- Product 19
 (19,1,240),(19,2,29),(19,2,22),(19,3,4),(19,4,2),(19,2,27);
+
+
+GO 
+
+INSERT INTO Users (firstName, lastName, phone, email, passwordHash, hashSalt, permissions, updatedAt, imagePath)
+VALUES 
+('Jane', 'Doe', '555-0199', 'jane.doe@example.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'salt_xyz123', 7, NULL, '/uploads/avatars/jane_doe.png'),
+
+('John', 'Smith', '555-0142', 'john.smith@example.com', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', 'salt_abc456', 1, NULL, NULL),
+
+('Alice', 'Johnson', NULL, 'alice.j@example.com', 'abcdef437faa5a7fce15d1ddcb9eaeaea377667b8', 'salt_qrs789', 3, NULL, '/uploads/avatars/alice_j.jpg'),
+
+('Bob', 'Miller', '555-0177', 'bob.miller@example.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'salt_tuv012', 1, NULL, NULL),
+
+('Charlie', 'Brown', '555-0185', 'charlie.b@example.com', '240be518fabd2724ddb6f04eeb1da14157b91876f503514763049800a29dac47', 'salt_wxyz567', 15, NULL, '/uploads/avatars/charlie_b.png');

@@ -22,10 +22,14 @@ namespace GS_APIs.Controllers
 			return Ok(users);
 		}
 
+
+
 		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public ActionResult CreateUser(CreateUserDTO DTO)
 		{
-			if (DTO is null)
+			if (DTO == null)
 				return BadRequest();
 
 			int userId = GS_Business.User.Add(DTO);
@@ -33,7 +37,9 @@ namespace GS_APIs.Controllers
 			if (userId <= 0)
 				return BadRequest("Failed to create user.");
 
-			return CreatedAtAction(nameof(GetUserById),new { id = userId },new { id = userId });
+			return CreatedAtAction("GetUserById", new { id = userId }, new { id = userId });
 		}
+
+
 	}
 }
