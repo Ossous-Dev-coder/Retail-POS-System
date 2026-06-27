@@ -1,4 +1,4 @@
-CREATE PROCEDURE SP_AddNewUser
+ALTER PROCEDURE SP_AddNewUser
 (
     @firstName VARCHAR(50),
     @lastName VARCHAR(50),
@@ -6,7 +6,7 @@ CREATE PROCEDURE SP_AddNewUser
     @email VARCHAR(100),
     @passwordHash VARCHAR(255),
     @hashSalt VARCHAR(255),
-    @permissions INT,
+    @role_id INT,
     @imagePath VARCHAR(300) = NULL
 )
 AS
@@ -21,7 +21,7 @@ BEGIN
         email,
         passwordHash,
         hashSalt,
-        permissions,
+        role_id,
         imagePath
     )
     VALUES
@@ -32,7 +32,7 @@ BEGIN
         @email,
         @passwordHash,
         @hashSalt,
-        @permissions,
+        @role_id,
         @imagePath
     );
 
@@ -50,7 +50,7 @@ ALTER PROCEDURE SP_UpdateUser
     @lastName VARCHAR(50),
     @phone VARCHAR(20) = NULL,
     @email VARCHAR(100),
-    @permissions INT,
+    @role_id INT,
     @imagePath VARCHAR(300) = NULL
 )
 AS
@@ -62,7 +62,7 @@ BEGIN
         lastName = @lastName,
         phone = @phone,
         email = @email,
-        permissions = @permissions,
+        role_id = @role_id,
         imagePath = @imagePath,
         updatedAt = GETDATE()
     WHERE id = @id;
@@ -73,16 +73,15 @@ GO
 
 --========================== Activation / Deactivate ================= /
 
-CREATE PROCEDURE SP_ChangeActivationStatus
+ALTER PROCEDURE SP_ChangeActivationStatus
 (
     @id INT,
-	@actvationStatus BIT
+	@activationStatus BIT
 )
 AS
 BEGIN
-    SET NOCOUNT ON;
 
-    UPDATE Users SET IsActive = @actvationStatus;
+    UPDATE Users SET IsActive = @activationStatus WHERE id = @id;
 
     RETURN @@ROWCOUNT;
 END
@@ -90,30 +89,31 @@ GO
 
 --================================= Get All Users ============= /
 
-CREATE PROCEDURE SP_GetAllUsers
+ALTER PROCEDURE SP_GetAllUsers
 AS
 BEGIN
     SET NOCOUNT ON;
 
     SELECT
-        id,
-        firstName,
-        lastName,
-        phone,
-        email,
-        permissions,
-        createdAt,
-        updatedAt,
-		IsActive,
-        imagePath
-    FROM Users
+        u.id,
+        u.firstName,
+        u.lastName,
+        u.phone,
+        u.email,
+        u.role_id,
+		r.Name AS roleName,
+        u.createdAt,
+        u.updatedAt,
+		u.IsActive,
+        u.imagePath
+    FROM Users u JOIN Roles r ON u.role_id = r.id
     ORDER BY id DESC;
 END
 GO
 
 --================================== Get User by id ============== /
 
-CREATE PROCEDURE SP_GetUserById
+ALTER PROCEDURE SP_GetUserById
 (
     @id INT
 )
@@ -121,19 +121,20 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT
-        id,
-        firstName,
-        lastName,
-        phone,
-        email,
-        permissions,
-        createdAt,
-        updatedAt,
-		IsActive,
-        imagePath
-    FROM Users
-    WHERE id = @id;
+     SELECT
+        u.id,
+        u.firstName,
+        u.lastName,
+        u.phone,
+        u.email,
+        u.role_id,
+		r.Name AS roleName,
+        u.createdAt,
+        u.updatedAt,
+		u.IsActive,
+        u.imagePath
+    FROM Users u JOIN Roles r ON u.role_id = r.id
+    WHERE u.id = @id;
 END
 GO
 
