@@ -6,56 +6,66 @@ namespace GS_Data.Data
 {
 	public class UserData
 	{
-		public static int AddUser(CreateUserDTO user)
+		public static List<UserDTO> GetAllUsers()
 		{
+			List<UserDTO> users = new();
+
 			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
-			using SqlCommand cmd = new SqlCommand("SP_AddNewUser", conn);
+			using SqlCommand cmd = new SqlCommand("SP_GetAllUsers", conn);
 
 			cmd.CommandType = CommandType.StoredProcedure;
 
-			cmd.Parameters.Add("@firstName", SqlDbType.VarChar, 50).Value = user.FirstName;
-			cmd.Parameters.Add("@lastName", SqlDbType.VarChar, 50).Value = user.LastName;
-
-			cmd.Parameters.Add("@phone", SqlDbType.VarChar, 20).Value = (object?)user.Phone ?? DBNull.Value;
-
-			cmd.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = user.Email;
-			cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar, 255).Value = user.PasswordHash;
-			cmd.Parameters.Add("@hashSalt", SqlDbType.VarChar, 255).Value = user.HashSalt;
-
-			cmd.Parameters.Add("@permissions", SqlDbType.Int).Value = user.Permissions;
-
-			cmd.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = (object?)user.ImagePath ?? DBNull.Value;
-
 			conn.Open();
 
-			object result = cmd.ExecuteScalar();
+			using SqlDataReader reader = cmd.ExecuteReader();
 
-			return Convert.ToInt32(result);
-		}
+			int idOrdinal = reader.GetOrdinal("id");
+			int firstNameOrdinal = reader.GetOrdinal("firstName");
+			int lastNameOrdinal = reader.GetOrdinal("lastName");
+			int emailOrdinal = reader.GetOrdinal("email");
+			int roleOrdinal = reader.GetOrdinal("role_id");
+			int roleNameOrdinal = reader.GetOrdinal("roleName");
+			int createdAtOrdinal = reader.GetOrdinal("createdAt");
+			int updatedAtOrdinal = reader.GetOrdinal("updatedAt");
+			int phoneOrdinal = reader.GetOrdinal("phone");
+			int imagePathOrdinal = reader.GetOrdinal("imagePath");
+			int statusOrdinal = reader.GetOrdinal("IsActive");
+			while (reader.Read())
+			{
+				users.Add(new UserDTO
+				{
+					Id = reader.GetInt32(idOrdinal),
 
-		public static int UpdateUser(UpdateUserDTO user)
-		{
-			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
-			using SqlCommand cmd = new SqlCommand("SP_UpdateUser", conn);
+					FirstName = reader.GetString(firstNameOrdinal),
 
-			cmd.CommandType = CommandType.StoredProcedure;
+					LastName = reader.GetString(lastNameOrdinal),
 
-			cmd.Parameters.Add("@id", SqlDbType.Int).Value = user.Id;
+					Email = reader.GetString(emailOrdinal),
 
-			cmd.Parameters.Add("@firstName", SqlDbType.VarChar, 50).Value = user.FirstName;
-			cmd.Parameters.Add("@lastName", SqlDbType.VarChar, 50).Value = user.LastName;
+					RoleId = reader.GetInt32(roleOrdinal),
 
-			cmd.Parameters.Add("@phone", SqlDbType.VarChar, 20).Value = (object?)user.Phone ?? DBNull.Value;
+					RoleName = reader.GetString(roleNameOrdinal),
 
-			cmd.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = user.Email;
+					CreatedAt = reader.GetDateTime(createdAtOrdinal),
 
-			cmd.Parameters.Add("@permissions", SqlDbType.Int).Value = user.Permissions;
+					UpdatedAt = reader.IsDBNull(updatedAtOrdinal)
+						? null
+						: reader.GetDateTime(updatedAtOrdinal),
 
-			cmd.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = (object?)user.ImagePath ?? DBNull.Value;
+					Phone = reader.IsDBNull(phoneOrdinal)
+						? null
+						: reader.GetString(phoneOrdinal),
 
-			conn.Open();
+					ImagePath = reader.IsDBNull(imagePathOrdinal)
+						? null
+						: reader.GetString(imagePathOrdinal),
 
-			return cmd.ExecuteNonQuery();
+					Status = reader.GetBoolean(statusOrdinal)
+
+				});
+			}
+
+			return users;
 		}
 
 		public static UserDTO? GetUserById(int id)
@@ -83,7 +93,9 @@ namespace GS_Data.Data
 
 				Email = reader.GetString(reader.GetOrdinal("email")),
 
-				Permissions = reader.GetInt32(reader.GetOrdinal("permissions")),
+				RoleId = reader.GetInt32(reader.GetOrdinal("role_id")),
+
+				RoleName = reader.GetString(reader.GetOrdinal("roleName")),
 
 				CreatedAt = reader.GetDateTime(reader.GetOrdinal("createdAt")),
 
@@ -95,6 +107,58 @@ namespace GS_Data.Data
 
 				Status = reader.GetBoolean(reader.GetOrdinal("IsActive"))
 			};
+		}
+
+		public static int AddUser(CreateUserDTO user)
+		{
+			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
+			using SqlCommand cmd = new SqlCommand("SP_AddNewUser", conn);
+
+			cmd.CommandType = CommandType.StoredProcedure;
+
+			cmd.Parameters.Add("@firstName", SqlDbType.VarChar, 50).Value = user.FirstName;
+			cmd.Parameters.Add("@lastName", SqlDbType.VarChar, 50).Value = user.LastName;
+
+			cmd.Parameters.Add("@phone", SqlDbType.VarChar, 20).Value = (object?)user.Phone ?? DBNull.Value;
+
+			cmd.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = user.Email;
+			cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar, 255).Value = user.PasswordHash;
+			cmd.Parameters.Add("@hashSalt", SqlDbType.VarChar, 255).Value = user.HashSalt;
+
+			cmd.Parameters.Add("@role_id", SqlDbType.Int).Value = user.RoleId;
+
+			cmd.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = (object?)user.ImagePath ?? DBNull.Value;
+
+			conn.Open();
+
+			object result = cmd.ExecuteScalar();
+
+			return Convert.ToInt32(result);
+		}
+
+		public static int UpdateUser(UpdateUserDTO user)
+		{
+			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
+			using SqlCommand cmd = new SqlCommand("SP_UpdateUser", conn);
+
+			cmd.CommandType = CommandType.StoredProcedure;
+
+			cmd.Parameters.Add("@id", SqlDbType.Int).Value = user.Id;
+
+			cmd.Parameters.Add("@firstName", SqlDbType.VarChar, 50).Value = user.FirstName;
+			cmd.Parameters.Add("@lastName", SqlDbType.VarChar, 50).Value = user.LastName;
+
+			cmd.Parameters.Add("@phone", SqlDbType.VarChar, 20).Value = (object?)user.Phone ?? DBNull.Value;
+
+			cmd.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = user.Email;
+
+			cmd.Parameters.Add("@role_id", SqlDbType.Int).Value = user.RoleId;
+
+			cmd.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = (object?)user.ImagePath ?? DBNull.Value;
+
+			conn.Open();
+
+			return cmd.ExecuteNonQuery();
 		}
 
 		public static int UserActivation(int id, bool status)
@@ -112,63 +176,5 @@ namespace GS_Data.Data
 			return cmd.ExecuteNonQuery();
 		}
 
-		public static List<UserDTO> GetAllUsers()
-		{
-			List<UserDTO> users = new();
-
-			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
-			using SqlCommand cmd = new SqlCommand("SP_GetAllUsers", conn);
-
-			cmd.CommandType = CommandType.StoredProcedure;
-
-			conn.Open();
-
-			using SqlDataReader reader = cmd.ExecuteReader();
-
-			int idOrdinal = reader.GetOrdinal("id");
-			int firstNameOrdinal = reader.GetOrdinal("firstName");
-			int lastNameOrdinal = reader.GetOrdinal("lastName");
-			int emailOrdinal = reader.GetOrdinal("email");
-			int permissionsOrdinal = reader.GetOrdinal("permissions");
-			int createdAtOrdinal = reader.GetOrdinal("createdAt");
-			int updatedAtOrdinal = reader.GetOrdinal("updatedAt");
-			int phoneOrdinal = reader.GetOrdinal("phone");
-			int imagePathOrdinal = reader.GetOrdinal("imagePath");
-			int statusOrdinal = reader.GetOrdinal("IsActive");
-			while (reader.Read())
-			{
-				users.Add(new UserDTO
-				{
-					Id = reader.GetInt32(idOrdinal),
-
-					FirstName = reader.GetString(firstNameOrdinal),
-
-					LastName = reader.GetString(lastNameOrdinal),
-
-					Email = reader.GetString(emailOrdinal),
-
-					Permissions = reader.GetInt32(permissionsOrdinal),
-
-					CreatedAt = reader.GetDateTime(createdAtOrdinal),
-
-					UpdatedAt = reader.IsDBNull(updatedAtOrdinal)
-						? null
-						: reader.GetDateTime(updatedAtOrdinal),
-
-					Phone = reader.IsDBNull(phoneOrdinal)
-						? null
-						: reader.GetString(phoneOrdinal),
-
-					ImagePath = reader.IsDBNull(imagePathOrdinal)
-						? null
-						: reader.GetString(imagePathOrdinal),
-
-					Status = reader.GetBoolean(statusOrdinal)
-
-				});
-			}
-
-			return users;
-		}
 	}
 }

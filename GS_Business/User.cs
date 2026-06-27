@@ -15,8 +15,6 @@ namespace GS_Business
 			GSUtility.ValidateString(dto.LastName, "Invalid last name!", 1, 50);
 
 			GSUtility.ValidateEmail(dto.Email);
-
-			GSUtility.ValidateNumber(dto.Permissions, "Invalid permissions!");
 		}
 
 		public static void validateUserDTO(UpdateUserDTO dto)
@@ -30,8 +28,6 @@ namespace GS_Business
 			GSUtility.ValidateString(dto.LastName, "Invalid last name!", 1, 50);
 
 			GSUtility.ValidateEmail(dto.Email);
-
-			GSUtility.ValidateNumber(dto.Permissions, "Invalid permissions!");
 		}
 
 		public static UserDTO? Find(int userId)

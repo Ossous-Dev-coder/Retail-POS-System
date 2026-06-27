@@ -8,6 +8,18 @@ USE GroceryPosDb;
 
 GO
 
+CREATE TABLE Roles (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	Name VARCHAR(50) NOT NULL,
+	Permissions INT NOT NULL
+)
+
+	
+
+
+
+
+
 CREATE TABLE Users (
 
 	id INT IDENTITY(1,1) PRIMARY KEY,
@@ -21,17 +33,19 @@ CREATE TABLE Users (
 	passwordHash VARCHAR(255) NOT NULL CHECK (passwordHash <> ''),
 	hashSalt VARCHAR(255) UNIQUE NOT NULL CHECK (hashSalt <> ''),
 
-	permissions INT NOT NULL,
+	role_id INT NOT NULL,
 
 	createdAt DATETIME2 DEFAULT GETDATE(),
 	updatedAt DATETIME2 NULL,
 
 	isActive BIT NOT NULL DEFAULT 1,
 
-	imagePath VARCHAR(300) NULL) 
+	imagePath VARCHAR(300) NULL,
 
 
-
+	CONSTRAINT FK_UserRole
+	FOREIGN KEY (role_id) 
+	REFERENCES Roles(id))
 
 
 

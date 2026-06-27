@@ -16,9 +16,7 @@ namespace GS_DTOs
 
 			public string Email { get; set; } = string.Empty;
 
-			public int Permissions { get; set; }
-
-			public bool Status { get; set; }
+			public int RoleId { get; set; }
 
 			public string? ImagePath { get; set; }
 		}
@@ -29,6 +27,7 @@ namespace GS_DTOs
 			public string PasswordHash { get; set; } = string.Empty;
 
 			public string HashSalt { get; set; } = string.Empty;
+
 		}
 
 		public class UserDTO : UserBaseDTO
@@ -39,6 +38,9 @@ namespace GS_DTOs
 
 			public DateTime? UpdatedAt { get; set; }
 
+			public string RoleName { get; set; } = string.Empty;
+
+			public bool Status { get; set; }
 		}
 
 		public class UpdateUserDTO : UserBaseDTO
