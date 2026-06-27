@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace GS_Data
 {
@@ -55,6 +56,26 @@ namespace GS_Data
 		static public string FormatDate(DateTime date)
 		{
 			return $"{date.Year}-{date.Month:D2}-{date.Day:D2} ";
+		}
+
+		public static void ValidateEmail(string email)
+		{
+			if (string.IsNullOrWhiteSpace(email))
+				throw new ArgumentException("Email cannot be empty.");
+
+			email = email.Trim();
+
+			try
+			{
+				MailAddress mailAddress = new MailAddress(email);
+
+				if (mailAddress.Address != email)
+					throw new ArgumentException("Invalid email format.");
+			}
+			catch (FormatException)
+			{
+				throw new ArgumentException("Invalid email format.");
+			}
 		}
 	}
 }

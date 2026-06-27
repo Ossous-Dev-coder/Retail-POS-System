@@ -76,17 +76,24 @@ namespace GS_Data.Data
 			return new UserDTO
 			{
 				Id = reader.GetInt32(reader.GetOrdinal("id")),
+
 				FirstName = reader.GetString(reader.GetOrdinal("firstName")), 
+
 				LastName = reader.GetString(reader.GetOrdinal("lastName")),
+
 				Email = reader.GetString(reader.GetOrdinal("email")),
+
 				Permissions = reader.GetInt32(reader.GetOrdinal("permissions")),
+
 				CreatedAt = reader.GetDateTime(reader.GetOrdinal("createdAt")),
 
 				UpdatedAt = reader.IsDBNull(reader.GetOrdinal("updatedAt")) ? null : reader.GetDateTime(reader.GetOrdinal("updatedAt")),
 
 				Phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null: reader.GetString(reader.GetOrdinal("phone")),
 
-				ImagePath = reader.IsDBNull(reader.GetOrdinal("imagePath")) ? null: reader.GetString(reader.GetOrdinal("imagePath"))
+				ImagePath = reader.IsDBNull(reader.GetOrdinal("imagePath")) ? null: reader.GetString(reader.GetOrdinal("imagePath")),
+
+				Status = reader.GetBoolean(reader.GetOrdinal("IsActive"))
 			};
 		}
 
@@ -127,16 +134,21 @@ namespace GS_Data.Data
 			int updatedAtOrdinal = reader.GetOrdinal("updatedAt");
 			int phoneOrdinal = reader.GetOrdinal("phone");
 			int imagePathOrdinal = reader.GetOrdinal("imagePath");
-
+			int statusOrdinal = reader.GetOrdinal("IsActive");
 			while (reader.Read())
 			{
 				users.Add(new UserDTO
 				{
 					Id = reader.GetInt32(idOrdinal),
+
 					FirstName = reader.GetString(firstNameOrdinal),
+
 					LastName = reader.GetString(lastNameOrdinal),
+
 					Email = reader.GetString(emailOrdinal),
+
 					Permissions = reader.GetInt32(permissionsOrdinal),
+
 					CreatedAt = reader.GetDateTime(createdAtOrdinal),
 
 					UpdatedAt = reader.IsDBNull(updatedAtOrdinal)
@@ -149,7 +161,10 @@ namespace GS_Data.Data
 
 					ImagePath = reader.IsDBNull(imagePathOrdinal)
 						? null
-						: reader.GetString(imagePathOrdinal)
+						: reader.GetString(imagePathOrdinal),
+
+					Status = reader.GetBoolean(statusOrdinal)
+
 				});
 			}
 

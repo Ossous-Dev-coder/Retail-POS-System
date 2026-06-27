@@ -18,11 +18,14 @@ namespace GS_DTOs
 
 			public int Permissions { get; set; }
 
+			public bool Status { get; set; }
+
 			public string? ImagePath { get; set; }
 		}
 
 		public class CreateUserDTO : UserBaseDTO
 		{
+
 			public string PasswordHash { get; set; } = string.Empty;
 
 			public string HashSalt { get; set; } = string.Empty;

@@ -43,7 +43,7 @@ GO
 --====================== Update User ============ /
 
 
-CREATE PROCEDURE SP_UpdateUser
+ALTER PROCEDURE SP_UpdateUser
 (
     @id INT,
     @firstName VARCHAR(50),
@@ -55,7 +55,6 @@ CREATE PROCEDURE SP_UpdateUser
 )
 AS
 BEGIN
-    SET NOCOUNT ON;
 
     UPDATE Users
     SET
