@@ -24,7 +24,7 @@ namespace GS_DTOs
 		public class CreateUserDTO : UserBaseDTO
 		{
 
-			public string PasswordHash { get; set; } = string.Empty;
+			public string Password { get; set; } = string.Empty;
 
 			public string HashSalt { get; set; } = string.Empty;
 

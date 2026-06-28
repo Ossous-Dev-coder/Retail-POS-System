@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace GS_Data
 {
-	public class GSUtility
+	public class Validation
 	{
 		static public void ValidateNumber(int value, string errorMessage)
 		{
@@ -53,11 +53,6 @@ namespace GS_Data
 			return -1;
 		}
 
-		static public string FormatDate(DateTime date)
-		{
-			return $"{date.Year}-{date.Month:D2}-{date.Day:D2} ";
-		}
-
 		public static void ValidateEmail(string email)
 		{
 			if (string.IsNullOrWhiteSpace(email))
@@ -77,5 +72,13 @@ namespace GS_Data
 				throw new ArgumentException("Invalid email format.");
 			}
 		}
+
+		public void ValidatePassword(string password)
+		{
+			ValidateString(password, "Invalid password!");
+
+			if (password.Length < 8) throw new ArgumentException("Password is too short!");
+		}
+
 	}
 }

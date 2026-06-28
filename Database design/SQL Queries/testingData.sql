@@ -146,6 +146,22 @@ VALUES
 
 GO 
 
+-- Roles
+
+INSERT INTO Roles (Name, Permissions)
+VALUES
+('Administrator', 2147483647), -- All permissions
+('Store Manager', 65535),       -- Almost everything
+('Supervisor', 16383),          -- Daily management
+('Cashier', 255),               -- Sales-related permissions
+('Inventory Clerk', 3840),      -- Inventory only
+('Purchasing Officer', 7680),   -- Suppliers & purchase orders
+('Accountant', 12288),          -- Financial reports
+('Auditor', 4096),              -- Read-only access
+('Customer Service', 511);      -- Sales, returns, customers
+
+
+-- Users
 INSERT INTO Users (firstName, lastName, phone, email, passwordHash, hashSalt, permissions, updatedAt, imagePath)
 VALUES 
 ('Jane', 'Doe', '555-0199', 'jane.doe@example.com', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'salt_xyz123', 7, NULL, '/uploads/avatars/jane_doe.png'),

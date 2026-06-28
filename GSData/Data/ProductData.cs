@@ -27,7 +27,7 @@ namespace GS_Data.Data
 
 			command.Parameters.Add("@productBarcode", SqlDbType.VarChar, 50).Value = (object?)productDTO.Barcode ?? DBNull.Value;
 			command.Parameters.Add("@description", SqlDbType.VarChar, 200).Value = (object?)productDTO.Description ?? DBNull.Value;
-			command.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = GSUtility.SetImagePath(productDTO.ImagePath);
+			command.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = Validation.SetImagePath(productDTO.ImagePath);
 		}
 
 		static ProductDTO loadProduct(SqlDataReader reader)
@@ -65,7 +65,7 @@ namespace GS_Data.Data
 
 		public static List<ProductDTO> GetAllProducts(int categoryId)
 		{
-			GSUtility.ValidateNumber(categoryId, "Invalid category id!");
+			Validation.ValidateNumber(categoryId, "Invalid category id!");
 
 			List<ProductDTO> productsDTOs = new List<ProductDTO>();
 
@@ -91,7 +91,7 @@ namespace GS_Data.Data
 
 		public static ProductDTO? GetProductById(int productId)
 		{
-			GSUtility.ValidateNumber(productId, "Invalid product id!");
+			Validation.ValidateNumber(productId, "Invalid product id!");
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -114,7 +114,7 @@ namespace GS_Data.Data
 
 		public static ProductDTO? GetProductByBarcode(string barcode)
 		{
-			GSUtility.ValidateString(barcode, "Invalid barcode");
+			Validation.ValidateString(barcode, "Invalid barcode");
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -137,7 +137,7 @@ namespace GS_Data.Data
 
 		public static ProductDTO? GetProductByName(string productName)
 		{
-			GSUtility.ValidateString(productName, "Invalid product name");
+			Validation.ValidateString(productName, "Invalid product name");
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -160,7 +160,7 @@ namespace GS_Data.Data
 
 		public static int AddProduct(ProductDTO productDTO)
 		{
-			GSUtility.ValidateObject(productDTO);
+			Validation.ValidateObject(productDTO);
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -179,7 +179,7 @@ namespace GS_Data.Data
 
 		public static int UpdateProduct(ProductDTO productDTO)
 		{
-			GSUtility.ValidateObject(productDTO);
+			Validation.ValidateObject(productDTO);
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -220,7 +220,7 @@ namespace GS_Data.Data
 
 		public static int DeleteProduct(int productId)
 		{
-			GSUtility.ValidateNumber(productId, "Invalid product id");
+			Validation.ValidateNumber(productId, "Invalid product id");
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -237,7 +237,7 @@ namespace GS_Data.Data
 
 		public static int RestoreProduct(int productId)
 		{
-			GSUtility.ValidateNumber(productId, "Invalid product id");
+			Validation.ValidateNumber(productId, "Invalid product id");
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 

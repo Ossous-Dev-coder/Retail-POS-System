@@ -7,7 +7,7 @@ namespace GS_Business
 	{
 		public static bool IsExists(int categoryId)
 		{
-			GSUtility.ValidateNumber(categoryId, "Invalid category id!");
+			Validation.ValidateNumber(categoryId, "Invalid category id!");
 
 			return CategoryData.IsExists(categoryId);
 		}

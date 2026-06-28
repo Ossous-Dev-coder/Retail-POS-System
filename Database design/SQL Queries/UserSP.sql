@@ -121,7 +121,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-     SELECT
+    SELECT
         u.id,
         u.firstName,
         u.lastName,

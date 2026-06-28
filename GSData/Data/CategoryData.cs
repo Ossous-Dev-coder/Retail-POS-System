@@ -49,7 +49,7 @@ namespace GS_Data.Data
 
 		public static int AddCategory(CategoryDTO categoryDTO)
 		{
-			GSUtility.ValidateObject(categoryDTO);
+			Validation.ValidateObject(categoryDTO);
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -59,18 +59,18 @@ namespace GS_Data.Data
 
 			command.Parameters.Add("@name", SqlDbType.VarChar, 50).Value = categoryDTO.Name;
 			command.Parameters.Add("@description", SqlDbType.VarChar, 200).Value = categoryDTO.Description;
-			command.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = GSUtility.SetImagePath(categoryDTO.ImagePath);
+			command.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = Validation.SetImagePath(categoryDTO.ImagePath);
 
 			connection.Open();
 
-			int result = GSUtility.IntToStr(command.ExecuteScalar().ToString());
+			int result = Validation.IntToStr(command.ExecuteScalar().ToString());
 
 			return result;
 		}
 
 		public static int UpdateCategory(CategoryDTO categoryDTO)
 		{
-			GSUtility.ValidateObject(categoryDTO);
+			Validation.ValidateObject(categoryDTO);
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 
@@ -81,7 +81,7 @@ namespace GS_Data.Data
 			command.Parameters.Add("@id", SqlDbType.Int).Value = categoryDTO.Id;
 			command.Parameters.Add("@name", SqlDbType.VarChar, 50).Value = categoryDTO.Name;
 			command.Parameters.Add("@description", SqlDbType.VarChar, 200).Value = categoryDTO.Description;
-			command.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = GSUtility.SetImagePath(categoryDTO.ImagePath);
+			command.Parameters.Add("@imagePath", SqlDbType.VarChar, 300).Value = Validation.SetImagePath(categoryDTO.ImagePath);
 
 			connection.Open();
 
@@ -90,7 +90,7 @@ namespace GS_Data.Data
 
 		public static bool IsExists(int categoryId)
 		{
-			GSUtility.ValidateNumber(categoryId, "Invalid category id!");
+			Validation.ValidateNumber(categoryId, "Invalid category id!");
 
 			using SqlConnection connection = new SqlConnection(DataSetting.ConnectionString);
 

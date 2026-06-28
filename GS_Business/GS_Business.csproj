@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GSData\GS_Data.csproj" />
     <ProjectReference Include="..\GS_DTOs\GS_DTOs.csproj" />
     <ProjectReference Include="..\Loging Service\Logging Service.csproj" />

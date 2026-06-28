@@ -8,31 +8,37 @@ namespace GS_Business
 	{
 		public static void validateUserDTO(CreateUserDTO dto)
 		{
-			GSUtility.ValidateObject(dto);
+			Validation.ValidateObject(dto);
 
-			GSUtility.ValidateString(dto.FirstName, "Invalid first name!", 1, 50);
+			Validation.ValidateString(dto.FirstName, "Invalid first name!", 1, 50);
 
-			GSUtility.ValidateString(dto.LastName, "Invalid last name!", 1, 50);
+			Validation.ValidateString(dto.LastName, "Invalid last name!", 1, 50);
 
-			GSUtility.ValidateEmail(dto.Email);
+			Validation.ValidateEmail(dto.Email);
+
+			Validation.ValidateNumber(dto.RoleId, "Invalid role id!");
+
+			Validation.ValidatePassword(dto.Password);
 		}
 
 		public static void validateUserDTO(UpdateUserDTO dto)
 		{
-			GSUtility.ValidateObject(dto);
+			Validation.ValidateObject(dto);
 
-			GSUtility.ValidateNumber(dto.Id, "Invalid user ID!");
+			Validation.ValidateNumber(dto.Id, "Invalid user ID!");
 
-			GSUtility.ValidateString(dto.FirstName, "Invalid first name!", 1, 50);
+			Validation.ValidateString(dto.FirstName, "Invalid first name!", 1, 50);
 
-			GSUtility.ValidateString(dto.LastName, "Invalid last name!", 1, 50);
+			Validation.ValidateString(dto.LastName, "Invalid last name!", 1, 50);
 
-			GSUtility.ValidateEmail(dto.Email);
+			Validation.ValidateEmail(dto.Email);
+
+			Validation.ValidateNumber(dto.RoleId, "Invalid role id!");
 		}
 
 		public static UserDTO? Find(int userId)
 		{
-			GSUtility.ValidateNumber(userId, "Invalid user ID!");
+			Validation.ValidateNumber(userId, "Invalid user ID!");
 
 			return UserData.GetUserById(userId);
 		}
@@ -58,7 +64,7 @@ namespace GS_Business
 
 		public static int Activation(int userId, bool status)
 		{
-			GSUtility.ValidateNumber(userId, "Invalid user ID!");
+			Validation.ValidateNumber(userId, "Invalid user ID!");
 
 			return UserData.UserActivation(userId, status);
 		}

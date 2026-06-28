@@ -122,7 +122,7 @@ namespace GS_Data.Data
 			cmd.Parameters.Add("@phone", SqlDbType.VarChar, 20).Value = (object?)user.Phone ?? DBNull.Value;
 
 			cmd.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = user.Email;
-			cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar, 255).Value = user.PasswordHash;
+			cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar, 255).Value = user.Password;
 			cmd.Parameters.Add("@hashSalt", SqlDbType.VarChar, 255).Value = user.HashSalt;
 
 			cmd.Parameters.Add("@role_id", SqlDbType.Int).Value = user.RoleId;

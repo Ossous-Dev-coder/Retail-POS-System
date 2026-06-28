@@ -15,31 +15,31 @@ namespace GS_Business
 
 		private static void validateProduct(ProductDTO productDTO)
 		{
-			GSUtility.ValidateString(productDTO.Name, "Invalid product Name !", nameMinLength, nameMaxLength);
+			Validation.ValidateString(productDTO.Name, "Invalid product Name !", nameMinLength, nameMaxLength);
 
-			GSUtility.ValidateNumber(productDTO.UnitPrice, "Unit price must be greater than 0.");
+			Validation.ValidateNumber(productDTO.UnitPrice, "Unit price must be greater than 0.");
 
-			GSUtility.ValidateNumber(productDTO.CategoryId, "Invalid category !");
+			Validation.ValidateNumber(productDTO.CategoryId, "Invalid category !");
 
-			GSUtility.ValidateNumber(productDTO.PricingTypeId, "Invalid pricing type !");
+			Validation.ValidateNumber(productDTO.PricingTypeId, "Invalid pricing type !");
 
 			if (productDTO.Quantity < 0)
 				throw new ArgumentException("Quantity cannot be negative !");
 
 			if (productDTO.Barcode != "")
-				GSUtility.ValidateString(productDTO.Barcode, "Invalid Barcode !", 8);
+				Validation.ValidateString(productDTO.Barcode, "Invalid Barcode !", 8);
 		}
 
 		public static List<ProductDTO> GetAllProducts(int categoryId)
 		{
-			GSUtility.ValidateNumber(categoryId, "Invalid Category id");
+			Validation.ValidateNumber(categoryId, "Invalid Category id");
 
 			return ProductData.GetAllProducts(categoryId); 
 		}
 
 		public static ProductDTO? GetProductById(int productId)
 		{
-			GSUtility.ValidateNumber(productId, "Product id must be greater than 0");
+			Validation.ValidateNumber(productId, "Product id must be greater than 0");
 
 			ProductDTO? product = ProductData.GetProductById(productId);
 
@@ -48,7 +48,7 @@ namespace GS_Business
 
 		public static ProductDTO? GetProductByBarcod(string barcode)
 		{
-			GSUtility.ValidateString(barcode, "Invalid Barcode!", barcodeMinLength);
+			Validation.ValidateString(barcode, "Invalid Barcode!", barcodeMinLength);
 
 			ProductDTO? product = ProductData.GetProductByBarcode(barcode);
 
@@ -57,7 +57,7 @@ namespace GS_Business
 
 		public static ProductDTO? GetProductByName(string productName)
 		{
-			GSUtility.ValidateString(productName, "Invalid product Name", nameMinLength, nameMaxLength);
+			Validation.ValidateString(productName, "Invalid product Name", nameMinLength, nameMaxLength);
 
 			ProductDTO? product = ProductData.GetProductByName(productName);
 
@@ -66,7 +66,7 @@ namespace GS_Business
 
 		public static int AddProduct(ProductDTO productDTO)
 		{
-			GSUtility.ValidateObject(productDTO);
+			Validation.ValidateObject(productDTO);
 
 			validateProduct(productDTO);
 
@@ -76,9 +76,9 @@ namespace GS_Business
 		public static int UpdateProduct(ProductDTO productDTO)
 		{
 
-			GSUtility.ValidateObject(productDTO);
+			Validation.ValidateObject(productDTO);
 
-			GSUtility.ValidateNumber(productDTO.Id, "Product id must be greater than 0");
+			Validation.ValidateNumber(productDTO.Id, "Product id must be greater than 0");
 
 			validateProduct(productDTO);
 
@@ -92,14 +92,14 @@ namespace GS_Business
 
 		public static int DeleteProduct(int productId)
 		{
-			GSUtility.ValidateNumber(productId, "Product id must be greater than 0");
+			Validation.ValidateNumber(productId, "Product id must be greater than 0");
 
 			return ProductData.DeleteProduct(productId);
 		}
 
 		public static int RestoreProduct(int productId)
 		{
-			GSUtility.ValidateNumber(productId, "Product id must be greater than 0");
+			Validation.ValidateNumber(productId, "Product id must be greater than 0");
 
 			return ProductData.RestoreProduct(productId);
 		}
