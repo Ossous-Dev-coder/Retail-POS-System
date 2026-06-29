@@ -73,9 +73,8 @@ namespace GS_Data
 			}
 		}
 
-		public void ValidatePassword(string password)
+		public static void ValidatePassword(string password)
 		{
-			ValidateString(password, "Invalid password!");
 
 			if (password.Length < 8) throw new ArgumentException("Password is too short!");
 		}

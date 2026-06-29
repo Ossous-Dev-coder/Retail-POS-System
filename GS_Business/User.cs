@@ -1,4 +1,5 @@
-﻿using GS_Data;
+﻿using BCrypt.Net;
+using GS_Data;
 using GS_Data.Data;
 using static GS_DTOs.UserDTOs;
 
@@ -51,6 +52,8 @@ namespace GS_Business
 		public static int AddNew(CreateUserDTO dto)
 		{ 
 			validateUserDTO(dto);
+
+			dto.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
 			return UserData.AddUser(dto);
 		}
