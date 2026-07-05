@@ -68,7 +68,7 @@ namespace GS_Data.Data
 			return users;
 		}
 
-		public static UserDTO? GetUserById(int id)
+		public static UserDTO? FindUser(int id)
 		{
 			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
 			using SqlCommand cmd = new SqlCommand("SP_GetUserById", conn);
@@ -106,6 +106,49 @@ namespace GS_Data.Data
 				ImagePath = reader.IsDBNull(reader.GetOrdinal("imagePath")) ? null: reader.GetString(reader.GetOrdinal("imagePath")),
 
 				Status = reader.GetBoolean(reader.GetOrdinal("IsActive"))
+			};
+		}
+
+		public static UserDTO? FindUser(string email)
+		{
+			using SqlConnection conn = new SqlConnection(DataSetting.ConnectionString);
+			using SqlCommand cmd = new SqlCommand("SP_GetUserByEmail", conn);
+
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.Parameters.Add("@email", SqlDbType.VarChar, 100).Value = email;
+
+			conn.Open();
+
+			using SqlDataReader reader = cmd.ExecuteReader();
+
+			if (!reader.Read())
+				return null;
+
+			return new UserDTO
+			{
+				Id = reader.GetInt32(reader.GetOrdinal("id")),
+
+				FirstName = reader.GetString(reader.GetOrdinal("firstName")),
+
+				LastName = reader.GetString(reader.GetOrdinal("lastName")),
+
+				Email = reader.GetString(reader.GetOrdinal("email")),
+
+				RoleId = reader.GetInt32(reader.GetOrdinal("role_id")),
+
+				RoleName = reader.GetString(reader.GetOrdinal("roleName")),
+
+				CreatedAt = reader.GetDateTime(reader.GetOrdinal("createdAt")),
+
+				UpdatedAt = reader.IsDBNull(reader.GetOrdinal("updatedAt")) ? null : reader.GetDateTime(reader.GetOrdinal("updatedAt")),
+
+				Phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null : reader.GetString(reader.GetOrdinal("phone")),
+
+				ImagePath = reader.IsDBNull(reader.GetOrdinal("imagePath")) ? null : reader.GetString(reader.GetOrdinal("imagePath")),
+
+				Status = reader.GetBoolean(reader.GetOrdinal("IsActive")),
+
+				PasswordHash = reader.GetString(reader.GetOrdinal("passwordHash"))
 			};
 		}
 

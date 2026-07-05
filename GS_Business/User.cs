@@ -41,7 +41,14 @@ namespace GS_Business
 		{
 			Validation.ValidateNumber(userId, "Invalid user ID!");
 
-			return UserData.GetUserById(userId);
+			return UserData.FindUser(userId);
+		}
+
+		public static UserDTO? Find(string email)
+		{
+			Validation.ValidateEmail(email);
+
+			return UserData.FindUser(email);
 		}
 
 		public static List<UserDTO> GetAll()

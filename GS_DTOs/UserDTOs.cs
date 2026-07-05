@@ -32,7 +32,7 @@ namespace GS_DTOs
 
 		public class UserDTO : UserBaseDTO
 		{
-			public int Id { get; set; }
+			public int Id { get; set;}
 
 			public DateTime CreatedAt { get; set; }
 
@@ -41,6 +41,8 @@ namespace GS_DTOs
 			public string RoleName { get; set; } = string.Empty;
 
 			public bool Status { get; set; }
+
+			public string PasswordHash { get; set; } = string.Empty;
 		}
 
 		public class UpdateUserDTO : UserBaseDTO

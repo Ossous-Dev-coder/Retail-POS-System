@@ -1,3 +1,6 @@
+USE GroceryPosDb
+
+
 ALTER PROCEDURE SP_AddNewUser
 (
     @firstName VARCHAR(50),
@@ -135,6 +138,35 @@ BEGIN
         u.imagePath
     FROM Users u JOIN Roles r ON u.role_id = r.id
     WHERE u.id = @id;
+END
+GO
+
+
+--================= Get User By Email ============/
+
+ALTER PROCEDURE SP_GetUserByEmail
+(
+    @email VARCHAR(100)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        u.id,
+        u.firstName,
+        u.lastName,
+        u.phone,
+        u.email,
+        u.role_id,
+		r.Name AS roleName,
+		u.passwordHash,
+        u.createdAt,
+        u.updatedAt,
+		u.IsActive,
+        u.imagePath
+    FROM Users u JOIN Roles r ON u.role_id = r.id
+    WHERE u.email = @email;
 END
 GO
 
